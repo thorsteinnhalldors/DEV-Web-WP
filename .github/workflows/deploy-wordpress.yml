@@ -1,0 +1,65 @@
+name: Deploy WordPress
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: -node-
+        restore-keys: |
+          -node-
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint code
+      run: npm run lint
+
+    - name: Run tests
+      run: npm test
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'DEV-Web-WP'
+        slot-name: 'production'
+        publish-profile: 
+
+    - name: Notify on success
+      if: success()
+      uses: actions/github-script@v4
+      with:
+        script: |
+          const message = "Deployment to DEV-Web-WP successful";
+          const to = process.env.NOTIFY_EMAIL;
+          // Add your notification logic here, e.g., send an email or post to a Slack channel
+
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v4
+      with:
+        script: |
+          const message = "Deployment to DEV-Web-WP failed";
+          const to = process.env.NOTIFY_EMAIL;
+          // Add your notification logic here, e.g., send an email or post to a Slack channel
+
+    - name: Create job summary
+      if: always()
+      run: echo "Deployment job completed" >> \
