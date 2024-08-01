@@ -44,8 +44,7 @@ jobs:
     
     - name: Install Dependencies
       run: cd wp-content/themes/twentynineteen && npm install
-    
-
+         
     - name: Lint code
       run: |
         cd app
