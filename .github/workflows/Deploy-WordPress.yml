@@ -9,6 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      ACTIONS_RUNNER_DEBUG: true
+      ACTIONS_STEP_DEBUG: true
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -66,7 +70,7 @@ jobs:
         script: |
           const message = "Deployment to DEV-Web-WP successful";
           const to = process.env.NOTIFY_EMAIL;
-          // Add your notification logic heres, e.g., send an email or post to a Slack channel
+          // Add your notification logic here, e.g., send an email or post to a Slack channel
 
     - name: Notify on failure
       if: failure()
