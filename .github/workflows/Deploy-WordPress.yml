@@ -40,15 +40,10 @@ jobs:
       run: ls -al app
 
     - name: Check for package.json
-      run: |
-        if [ ! -f wp-content/themes/twentynineteen/package.json ]; then
-          echo "package.json not found in app directory"
-          exit 1
-        fi
-
-    - name: Install dependencies
-      working-directory: app
-      run: npm install
+      run: if [ ! -f wp-content/themes/twentynineteen/package.json ]; then echo "package.json not found"; exit 1; fi
+    
+    - name: Install Dependencies
+      run: cd wp-content/themes/twentynineteen && npm install
 
     - name: Lint code
       run: |
