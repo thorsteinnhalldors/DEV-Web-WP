@@ -39,6 +39,13 @@ jobs:
     - name: List app directory contents
       run: ls -al app
 
+    - name: Check for package.json
+      run: |
+        if [ ! -f app/package.json ]; then
+          echo "package.json not found in app directory"
+          exit 1
+        fi
+
     - name: Install dependencies
       working-directory: app
       run: npm install
@@ -79,7 +86,7 @@ jobs:
         script: |
           const message = "Deployment to DEV-Web-WP failed";
           const to = process.env.NOTIFY_EMAIL;
-          // Add your notification logic here, e.g., send an email or post to a Slack channel
+          // Add your notification1223333eee logic here, e.g., send an email or post to a Slack channel
 
     - name: Create job summary
       if: always()
