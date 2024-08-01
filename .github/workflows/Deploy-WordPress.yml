@@ -41,7 +41,7 @@ jobs:
 
     - name: Check for package.json
       run: |
-        if [ ! -f app/package.json ]; then
+        if [ ! -f wp-content/themes/twentynineteen/package.json ]; then
           echo "package.json not found in app directory"
           exit 1
         fi
