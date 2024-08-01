@@ -33,10 +33,5 @@ jobs:
     - name: Build Styles
       run: cd wp-content/themes/twentynineteen && npm run build
 
-    - name: Watch for Changes (Optional)
-      env:
-        SHELL: /bin/bash
-      run: cd wp-content/themes/twentynineteen && npm run watch
-
     - name: Run Tests
       run: cd wp-content/themes/twentynineteen && npm test
